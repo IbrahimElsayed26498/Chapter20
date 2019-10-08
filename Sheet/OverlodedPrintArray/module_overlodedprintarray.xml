@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_overlodedprintarray" default="compile.module.overlodedprintarray">
+  <dirname property="module.overlodedprintarray.basedir" file="${ant.file.module_overlodedprintarray}"/>
+  
+  <property name="module.jdk.home.overlodedprintarray" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.overlodedprintarray" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.overlodedprintarray" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.overlodedprintarray" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="overlodedprintarray.output.dir" value="${module.overlodedprintarray.basedir}/out/production/OverlodedPrintArray"/>
+  <property name="overlodedprintarray.testoutput.dir" value="${module.overlodedprintarray.basedir}/out/test/OverlodedPrintArray"/>
+  
+  <path id="overlodedprintarray.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="overlodedprintarray.module.production.classpath">
+    <path refid="${module.jdk.classpath.overlodedprintarray}"/>
+  </path>
+  
+  <path id="overlodedprintarray.runtime.production.module.classpath">
+    <pathelement location="${overlodedprintarray.output.dir}"/>
+  </path>
+  
+  <path id="overlodedprintarray.module.classpath">
+    <path refid="${module.jdk.classpath.overlodedprintarray}"/>
+    <pathelement location="${overlodedprintarray.output.dir}"/>
+  </path>
+  
+  <path id="overlodedprintarray.runtime.module.classpath">
+    <pathelement location="${overlodedprintarray.testoutput.dir}"/>
+    <pathelement location="${overlodedprintarray.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.overlodedprintarray">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.overlodedprintarray">
+    <patternset refid="excluded.from.module.overlodedprintarray"/>
+  </patternset>
+  
+  <path id="overlodedprintarray.module.sourcepath">
+    <dirset dir="${module.overlodedprintarray.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.overlodedprintarray" depends="compile.module.overlodedprintarray.production,compile.module.overlodedprintarray.tests" description="Compile module OverlodedPrintArray"/>
+  
+  <target name="compile.module.overlodedprintarray.production" depends="register.custom.compilers" description="Compile module OverlodedPrintArray; production classes">
+    <mkdir dir="${overlodedprintarray.output.dir}"/>
+    <javac2 destdir="${overlodedprintarray.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.overlodedprintarray}/javac">
+      <compilerarg line="${compiler.args.overlodedprintarray}"/>
+      <bootclasspath refid="overlodedprintarray.module.bootclasspath"/>
+      <classpath refid="overlodedprintarray.module.production.classpath"/>
+      <src refid="overlodedprintarray.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.overlodedprintarray"/>
+    </javac2>
+    
+    <copy todir="${overlodedprintarray.output.dir}">
+      <fileset dir="${module.overlodedprintarray.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.overlodedprintarray.tests" depends="register.custom.compilers,compile.module.overlodedprintarray.production" description="compile module OverlodedPrintArray; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.overlodedprintarray" description="cleanup module">
+    <delete dir="${overlodedprintarray.output.dir}"/>
+    <delete dir="${overlodedprintarray.testoutput.dir}"/>
+  </target>
+</project>
